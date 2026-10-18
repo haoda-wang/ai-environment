@@ -30,12 +30,12 @@ def mse( y , p):return np.mean( (y - p) ** 2 )
 def rmse( y , p):return np.sqrt( mse( y , p) )
 def mae( y , p):return np.mean( np.abs( y - p) )
 def mape( y , p):return np.mean( np.abs( y - p) / y )*100
-
-print(f"基线（明天=今天）  "
-      f"MSE={mse(y_test, y_pred):.3f}  "
-      f"RMSE={rmse(y_test, y_pred):.3f}  "
-      f"MAE={mae(y_test, y_pred):.3f} "
-      f"MAPE={mape(y_test, y_pred):.2f}%")
+if __name__ == '__main__':
+      print(f"基线（明天=今天）  "
+            f"MSE={mse(y_test, y_pred):.3f}  "
+            f"RMSE={rmse(y_test, y_pred):.3f}  "
+            f"MAE={mae(y_test, y_pred):.3f} "
+            f"MAPE={mape(y_test, y_pred):.2f}%")
 #基线（明天=今天）  MSE=22.194  RMSE=4.711  MAE=3.896  MAPE=4.02%
 """
 真正的噪声信号在这里： MAE=3.90 ≈ 噪声标准差 3 。
