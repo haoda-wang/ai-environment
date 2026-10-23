@@ -37,7 +37,7 @@ if __name__ == '__main__':
     # 字典item:它返回 所有键值对
     #preds.items():遍历`{'基线': array, '线性回归': array, ...}` ，每次拿到一个模型名`k` 和它的预测数组`v`
     #{k: np.asarray(v) * FACTOR * 10 for k, v in preds.items()}: 火电预测值 × 因子 → 万吨CO2
-    print(preds.items())
+    # print(preds.items())
     plot_pred(y_test_c, preds_c, path='fig/carbon_pred.png',
               title='2025-01 ~ 2026-09 月度电力碳排放预测对比（万吨CO2）',
               ylabel='碳排放（万吨CO2）')
@@ -46,4 +46,4 @@ if __name__ == '__main__':
     df = calc_carbon(df)
     # resample('YE'): 按年(Year End, 每年最后一天)分组降采样，求每年碳排总和
     # /1e4: 万吨 → 亿吨
-    print(df['carbon'].resample('YE').sum() / 1e4)    # 亿吨/年
+    # print(df['carbon'].resample('YE').sum() / 1e4)    # 亿吨/年
