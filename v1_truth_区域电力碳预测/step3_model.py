@@ -53,7 +53,7 @@ def run_rf ( x_train, y_train, x_test, y_test, tune= False ):
         grid = GridSearchCV(e,
                             param,
                             cv=TimeSeriesSplit(n_splits= 3),  #`TimeSeriesSplit` 强制“只用过去预测未来”
-                            scoring= 'neg_root_mean_squared_error' )
+                            scoring='neg_root_mean_squared_error' )
         grid.fit(x_train, y_train)
         # print ( '最优参数:' , grid.best_params_)
         """
@@ -77,15 +77,23 @@ def run_xgb ( x_train, y_train, x_test, y_test ):
 
 def run_all(x_train, y_train, x_test, y_test, target='total'):
     """跑全部模型：返回 (指标表, 预测值字典)"""
-    p0 = x_test[f'{target}_lag1']
+    p0 = x_test[f'{target}_lag1']          # ← 动态列名，target='thermal' 就取 thermal_lag1
     r0 = evaluate(y_test, p0, '基线')
     r1, p1 = run_linear(x_train, y_train, x_test, y_test)
     r2, p2 = run_rf(x_train, y_train, x_test, y_test, tune=True)
     r3, p3 = run_xgb(x_train, y_train, x_test, y_test)
-
     df = pd.DataFrame([r0, r1, r2, r3]).set_index('name')
-    preds = {'基线': p0, '线性回归': p1, '随机森林': p2, 'XGBoost': p3}
+    preds = {'基线': p0, '线性回归': p1, '随机森林': p2, 'XGBoost': p3}   #这里`p0、p1、p2、p3` 每个都是一个 numpy 数组 （每个模型对测试集 21 个月的预测值）
+    """
+    {
+  '基线':     array([5800, 6100, 5900, ...]),   # 21 个数
+  '线性回归': array([5750, 6050, 5880, ...]),   # 21 个数
+  '随机森林': array([5720, 6080, 5910, ...]),   # 21 个数
+  'XGBoost':  array([5690, 6120, 5870, ...]),   # 21 个数
+}
+    """
     return df, preds
+
 
 if __name__ == '__main__':
     x_train, x_test, y_train, y_test = make_features(clean_reshape(load_raw_data('data/月度数据.csv')))

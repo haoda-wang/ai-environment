@@ -8,8 +8,11 @@ plt.rcParams['font.sans-serif'] = ['SimHei']      # 中文字体，不加会变�
 plt.rcParams['axes.unicode_minus'] = False
 
 
-def plot_pred(y_test, preds, path='fig/pred_compare.png'):
-    """真实 vs 各模型预测：指标看不出的事情都在这张图上"""
+def plot_pred(y_test, preds, path='fig/pred_compare.png',
+              title='2025-01 ~ 2026-09 月度火电发电量预测对比（亿千瓦时）',
+              ylabel='火电发电量（亿千瓦时）'):
+    """真实 vs 各模型预测：指标看不出的事情都在这张图上。
+    title/ylabel 可覆盖，同一函数可画火电或碳排（单位由调用方换算）。"""
     os.makedirs('fig', exist_ok=True) #
 
     fig, ax = plt.subplots(figsize=(11, 5))
@@ -17,8 +20,8 @@ def plot_pred(y_test, preds, path='fig/pred_compare.png'):
     ax.plot(x, y_test.to_numpy(), 'k-', lw=2.5, label='真实值')
     for name, p in preds.items():
         ax.plot(x, np.asarray(p), '--', lw=1.4, label=name)
-    ax.set_title('2025-01 ~ 2026-09 月度火电发电量预测对比（亿千瓦时）')
-    ax.set_ylabel('火电发电量（亿千瓦时）')
+    ax.set_title(title)
+    ax.set_ylabel(ylabel)
     ax.legend()
     ax.grid(alpha=0.3)
     fig.autofmt_xdate() # 自动旋转 x 轴标签

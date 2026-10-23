@@ -87,7 +87,7 @@ if __name__ == '__main__':
 
     # print("一月:4907.1","2月的cum-当期值为:",8560.9-3653.8)  #一月:4907.1 2月的cum-当期值为: 4907.099999999999
     x_train, x_test, y_train, y_test = make_features(df)
-    print(f"训练: {x_train.shape} 测试: {x_test.shape} ")                 #训练: (84, 7) 测试: (21, 7)
+    print(f"训练: {x_train.shape} 测试: {x_test.shape} ")                 #训练: (84, 3) 测试: (21, 3)
     # print(f"训练窗口: {x_train.index[0].date()} ~ {x_train.index[-1].date()} ") #训练窗口: 2018-01-01 ~ 2024-12-01
     # print(f"测试窗口: {x_test.index[0].date()} ~ {x_test.index[-1].date()} ")   #测试窗口: 2025-01-01 ~ 2026-09-01
     print(f"特征列: {x_train.columns.tolist()} ")
