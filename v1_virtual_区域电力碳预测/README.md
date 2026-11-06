@@ -22,6 +22,7 @@
 → 滞后/滚动特征工程(Step5) → 时序切分(Step6) → 基线模型(Step7) 
 → 线性回归(Step8) → 随机森林(Step9) → XGBoost(Step10) → 综合评估
 ```
+![xgboost_vs_rf_vs_linear.png](fig/xgboost_vs_rf_vs_linear.png)
 ###  文件目录结构
 
 | 文件 | 内容 | 关键知识点 |
@@ -38,6 +39,7 @@
 | `step10_xgboost.py` | XGBoost + 学习率实验 | boosting、学习率×树数联动、过拟合的样子 |
 | `data/` | 生成的中间数据（不入库） | 已加入.gitignore，不入版本库|
 | `fig/` | 分析图表输出 | — |
+
 
 ## 结果（合成数据，指标不作数；单次运行示例，名次随种子波动）
 

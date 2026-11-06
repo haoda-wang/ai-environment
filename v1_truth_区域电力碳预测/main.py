@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from step1_read_data import load_raw_data, clean_reshape
-from step2_feature import make_features
+from step2_feature import make_features, fill_month
 from step3_model import run_all
 from step4_plot import plot_pred
 
@@ -9,6 +9,7 @@ FACTOR = 0.8333   # 火电排放因子 kgCO2/kWh
 
 def calc_carbon(df, factor=FACTOR):
     """火电发电量(亿kWh) → 碳排放(万吨CO2)：1e8 kWh × kg/kWh ÷1e3 ÷1e4 = ×10"""
+
     df = df.copy()
     df['carbon'] = df['thermal'] * factor * 10
     return df
@@ -43,6 +44,7 @@ if __name__ == '__main__':
               ylabel='碳排放（万吨CO2）')
 
     # 历史碳核算（真值换算，不是预测）
+    df = fill_month(df)  # 先补 1-2 月，再算碳
     df = calc_carbon(df)
     # resample('YE'): 按年(Year End, 每年最后一天)分组降采样，求每年碳排总和
     # /1e4: 万吨 → 亿吨
